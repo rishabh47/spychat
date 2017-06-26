@@ -69,7 +69,7 @@ def add_friend():
     new_friend.rating = raw_input("Spy rating?")
     new_friend.rating = float(new_friend.rating)
     #validation of name age and salutation
-    if len(new_friend.name) > 0 and new_friend.age > 12 and new_friend.rating >= spy.rating:
+    if (new_friend.name).isalpha()== True and new_friend.age > 12 and new_friend.age < 50 and new_friend.rating >= spy.rating:
         friends.append(new_friend)
         print 'Friend Added!'
     else:
@@ -179,32 +179,36 @@ def start_chat(spy):
     else:
         print 'Sorry you are not of the correct age to be a spy'
 
-#function to add a new spy
+
 if existing.upper() == "Y":
     start_chat(spy)
+#function to add a new spy
 else:
 
     spy = Spy('', '', 0, 0.0)
 
     spy.name = raw_input("Welcome to spy chat, you must tell me your spy name first: ")
     #to add the name
-    if len(spy.name) > 0:
+    if (spy.name).isalpha()== True:
         spy.salutation = raw_input("Should I call you Mr. or Ms.?: ")
         #to add the age
         spy.age = raw_input("What is your age?")
         spy.age = int(spy.age)
+        if spy.age > 12 and spy.age < 50:
         #to add the rating
-        spy.rating = raw_input("What is your spy rating?")
-        spy.rating = float(spy.rating)
+            spy.rating = raw_input("What is your spy rating?")
+            spy.rating = float(spy.rating)
         #message according to the spy rating
-        if spy.rating > 4.5:
-            print 'Great ace!'
-        elif spy.rating > 3.5 and spy.rating <= 4.5:
-            print 'You are one of the good ones.'
-        elif spy.rating >= 2.5 and spy.rating <= 3.5:
-            print 'You can always do better'
+            if spy.rating > 4.5:
+                print 'Great ace!'
+            elif spy.rating > 3.5 and spy.rating <= 4.5:
+                print 'You are one of the good ones.'
+            elif spy.rating >= 2.5 and spy.rating <= 3.5:
+                print 'You can always do better'
+            else:
+                print 'We can always use somebody to help in the office.'
+            start_chat(spy)
         else:
-            print 'We can always use somebody to help in the office.'
-        start_chat(spy)
+            print 'Sorry you are not of the correct age to be a spy'
     else:
         print 'Please add a valid spy name'
