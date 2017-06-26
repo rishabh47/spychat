@@ -3,7 +3,7 @@ from datetime import datetime
 class Spy:
 
 #constructor of the class to initialize the values
-    def __init__(self, name, salutation, age, rating):
+    def __init__(self, name, salutation, age, rating, word_count):
         self.name = name
         self.salutation = salutation
         self.age = age
@@ -11,6 +11,7 @@ class Spy:
         self.is_online = True
         self.chats = []
         self.current_status_message = None
+        self.word_count = word_count
 
 #chatmessage class to reuse the code
 class ChatMessage:
@@ -21,11 +22,11 @@ class ChatMessage:
         self.time = datetime.now()
         self.sent_by_me = sent_by_me
 #our predefined spy
-spy = Spy('bond', 'Mr.', 24, 2.1)
+spy = Spy('bond', 'Mr.', 24, 2.1,0)
 #oyr predefined friends
-friend_one = Spy('Ankush', 'Mr.', 21, 2.7)
-friend_two = Spy('Tanya', 'Ms.', 18, 2.1)
-friend_three = Spy('Karan', 'Prof.', 33, 3.7)
+friend_one = Spy('Ankush', 'Mr.', 21, 2.7,0)
+friend_two = Spy('Tanya', 'Ms.', 18, 2.1,0)
+friend_three = Spy('Karan', 'Prof.', 33, 3.7,0)
 
 #adding our predefined friends to a list
 friends = [friend_one, friend_two, friend_three]

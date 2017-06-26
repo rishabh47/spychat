@@ -56,12 +56,11 @@ def add_status():
 #function to add a new friend
 
 def add_friend():
-    new_friend = Spy('', '', 0, 0.0)
+    new_friend = Spy('', '', 0, 0.0,0)
     #to add new friend's name and salutation
     new_friend.name = raw_input("Please add your friend's name: ")
     new_friend.salutation = raw_input("Are they Mr. or Ms.?: ")
 
-    new_friend.name = new_friend.salutation + " " + new_friend.name
     #to add new friend's age
     new_friend.age = raw_input("Age?")
     new_friend.age = int(new_friend.age)
@@ -69,7 +68,7 @@ def add_friend():
     new_friend.rating = raw_input("Spy rating?")
     new_friend.rating = float(new_friend.rating)
     #validation of name age and salutation
-    if (new_friend.name).isalpha()== True and new_friend.age > 12 and new_friend.age < 50 and new_friend.rating >= spy.rating:
+    if len(new_friend.name)>0 and new_friend.age > 12 and new_friend.rating >= spy.rating:
         friends.append(new_friend)
         print 'Friend Added!'
     else:
@@ -115,20 +114,26 @@ def read_message():
     output_path = raw_input("What is the name of the file?")
 
     secret_text = Steganography.decode(output_path)
-
-    new_chat = ChatMessage(secret_text, False)
-#validation os secret messsage
-    friends[sender].chats.append(new_chat)
-    if len(secret_text)==0:
-        print "No secret message"
-        #check for special messages
-    elif secret_text.upper()=="SOS" or secret_text.upper()=="Save me":
-        print "Your friend is in danger"
-        print "Message = %s" % secret_text
-        print "Your secret message has been saved!"
-    else :
-        print "Message = %s" % secret_text
-        print "Your secret message has been saved!"
+    #to count the number of words a friend is speaking
+    friends[sender].word_count+=len(secret_text.split())
+    #to delete the friend if he/she speaks more than 100 words
+    if friends[sender].word_count> 100:
+        del friends[sender]
+        print "Friend deleted for talking too much"
+    else:
+        new_chat = ChatMessage(secret_text, False)
+    #validation of secret messsage
+        friends[sender].chats.append(new_chat)
+        if len(secret_text)==0:
+            print "No secret message"
+            #check for special messages
+        elif secret_text.upper()=="SOS" or secret_text.upper()=="Save me":
+            print "Message = %s" % secret_text
+            print "Your friend is in danger"
+            print "Your secret message has been saved!"
+        else :
+            print "Message = %s" % secret_text
+            print "Your secret message has been saved!"
 
 #function to read chat history
 def read_chat_history():
@@ -183,9 +188,9 @@ def start_chat(spy):
 if existing.upper() == "Y":
     start_chat(spy)
 #function to add a new spy
-else:
+elif existing.upper() == "N":
 
-    spy = Spy('', '', 0, 0.0)
+    spy = Spy('', '', 0, 0.0,0)
 
     spy.name = raw_input("Welcome to spy chat, you must tell me your spy name first: ")
     #to add the name
@@ -212,3 +217,5 @@ else:
             print 'Sorry you are not of the correct age to be a spy'
     else:
         print 'Please add a valid spy name'
+else:
+    print "Wrong input! The program will terminate now."
