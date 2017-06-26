@@ -1,7 +1,7 @@
-
+from spy_details import spy, Spy, ChatMessage, friends
 from steganography.steganography import Steganography
 from datetime import datetime
-
+from termcolor import colored
 
 STATUS_MESSAGES = ['My name is Bond, James Bond', 'Shaken, not stirred.', 'Keeping the British end up, Sir']
 
@@ -118,7 +118,10 @@ def read_message():
 
     friends[sender].chats.append(new_chat)
     if len(secret_text)==0:
-
+        print "No secret message"
+    elif secret_text.upper()=="SOS" or secret_text.upper()=="Save me":
+        print "Your friend is in danger"
+        print "Message = %s" % secret_text
         print "Your secret message has been saved!"
     else :
         print "Message = %s" % secret_text
@@ -133,10 +136,10 @@ def read_chat_history():
     for chat in friends[read_for].chats:
         if chat.sent_by_me:
             print '[%s] %s: %s' % (
-            colored(chat.time.strftime("%d %B %Y"), 'blue'), 'You said:', chat.message)
+            colored(chat.time.strftime("%d %B %Y"), 'blue'), colored('You said:', 'red'), chat.message)
         else:
             print '[%s] %s said: %s' % (
-           ("%d %B %Y"), , (friends[read_for].name, , chat.message)
+            colored(chat.time.strftime("%d %B %Y"), 'blue'), colored(friends[read_for].name, 'red'), chat.message)
 
 
 def start_chat(spy):
